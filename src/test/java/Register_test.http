@@ -1,0 +1,13 @@
+### register new user
+POST http://localhost:8080/auth/register
+Accept: application/json
+Content-Type: application/json
+
+{
+  "username": "Maro",
+  "password": "marecki",
+  "email": "marek@gmail.com",
+  "firstName": "Marek",
+  "lastName": "Nowak"
+}
+
