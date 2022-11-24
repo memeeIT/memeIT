@@ -1,6 +1,6 @@
 package com.memeit.user;
 
-import com.spotifinder.common.PageMappingInfo;
+import com.memeit.common.PageMappingInfo;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 

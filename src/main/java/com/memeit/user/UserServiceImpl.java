@@ -1,7 +1,8 @@
 package com.memeit.user;
 
-import com.spotifinder.exception.UserNotFoundException;
-import com.spotifinder.utils.UuidGenerator;
+import com.memeit.exception.UserNotFoundException;
+import com.memeit.utils.UuidGenerator;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
