@@ -53,7 +53,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .formLogin(form -> form.loginPage(LOGIN_PAGE).defaultSuccessUrl("/"))
                 .authorizeRequests()
-                .antMatchers(LOGIN_PAGE).permitAll()
+                .antMatchers("/auth"+LOGIN_PAGE).permitAll()
                 .antMatchers(REGISTER_PAGE).permitAll()
                 .antMatchers(API_PATH + USER_API_PATH + "/**").hasRole(Role.ADMIN.name())
                 .and().httpBasic();
