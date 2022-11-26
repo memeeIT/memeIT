@@ -1,5 +1,6 @@
 package com.memeit.user;
 
+import com.memeit.post.Post;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -7,6 +8,7 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Data
 @Builder(toBuilder = true)
@@ -48,6 +50,10 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(name = "ROLE")
     private Role role;
+
+//    @OneToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH},
+//    mappedBy = "author", fetch = FetchType.LAZY)
+//    private List<Post> post;
 
     @Transient
     private String token;

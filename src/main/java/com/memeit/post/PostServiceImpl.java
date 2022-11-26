@@ -2,6 +2,7 @@ package com.memeit.post;
 
 import com.memeit.exception.PostNotFoundException;
 import com.memeit.user.User;
+import com.memeit.utils.SecurityContext;
 import com.memeit.utils.UuidGenerator;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +15,11 @@ import java.util.Optional;
 public class PostServiceImpl implements PostService{
 
     private final PostRepository postRepository;
+    private final SecurityContext securityContext;
 
-    public PostServiceImpl(PostRepository postRepository) {
+    public PostServiceImpl(PostRepository postRepository, SecurityContext securityContext) {
         this.postRepository = postRepository;
+        this.securityContext = securityContext;
     }
 
 
@@ -38,6 +41,9 @@ public class PostServiceImpl implements PostService{
     public PostDto save(PostDto postDto) {
         postDto.setUuid(UuidGenerator.generateUuid());
         postDto.setUploadDate(LocalDate.now());
+        User currentLoggedInUser = securityContext.getCurrentLoggedInUser();
+
+        postDto.setAuthor(currentLoggedInUser);
         Post savedPost = postRepository.save(PostMapper.mapToModel(postDto));
         return PostMapper.mapToDto(savedPost);
 
