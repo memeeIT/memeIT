@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
 
@@ -37,7 +38,7 @@ public class Post {
     private String title;
 
     @Column(name = "UPLOAD_DATE", nullable = false)
-    private Date uploadDate;
+    private LocalDate uploadDate;
 
     @Column(name = "VOTES")
     private int votes;

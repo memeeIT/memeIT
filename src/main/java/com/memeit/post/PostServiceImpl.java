@@ -5,6 +5,8 @@ import com.memeit.user.User;
 import com.memeit.utils.UuidGenerator;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,6 +37,7 @@ public class PostServiceImpl implements PostService{
     @Override
     public PostDto save(PostDto postDto) {
         postDto.setUuid(UuidGenerator.generateUuid());
+        postDto.setUploadDate(LocalDate.now());
         Post savedPost = postRepository.save(PostMapper.mapToModel(postDto));
         return PostMapper.mapToDto(savedPost);
 
@@ -43,12 +46,7 @@ public class PostServiceImpl implements PostService{
     @Override
     public PostDto updateByUuid(String uuid, PostDto requestBody) {
         PostDto postDtoToUpdate = findByUuid(uuid);
-
-        if (requestBody.getImage() != null) postDtoToUpdate.setImage(requestBody.getImage());
-        if (requestBody.getAuthor() != null) postDtoToUpdate.setAuthor(requestBody.getAuthor());
         if (requestBody.getTitle() != null) postDtoToUpdate.setTitle(requestBody.getTitle());
-        if (requestBody.getUploadDate() != null) postDtoToUpdate.setUploadDate(requestBody.getUploadDate());
-
         Post postUpdated = postRepository.saveAndFlush(PostMapper.mapToModel(postDtoToUpdate));
         PostDto responseBody = PostMapper.mapToDto(postUpdated);
         return responseBody;

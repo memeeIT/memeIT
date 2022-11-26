@@ -30,7 +30,7 @@ public class User {
     private String username;
 
     @Column(name = "PASSWORD", nullable = false)
-    @Size(min = 8, message = "Password must cointain at least 8 characters")
+    @Size(min = 8, message = "Password must contain at least 8 characters")
     private String password;
 
     @Column(name = "EMAIL", nullable = false)
