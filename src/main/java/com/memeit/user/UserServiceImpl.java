@@ -1,8 +1,12 @@
 package com.memeit.user;
 
-import com.memeit.exception.UserNotFoundException;
+import com.memeit.exception.ResourceNotFoundException;
+import com.memeit.post.Post;
+import com.memeit.post.PostDto;
 import com.memeit.utils.UuidGenerator;
 
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +35,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto findByUuid(String uuid) {
         Optional<User> userOptional = userRepository.findByUuid(uuid);
-        User response = userOptional.orElseThrow(() -> new UserNotFoundException("User with provided Uuid {" + uuid + "} doesn't exist"));
+        User response = userOptional.orElseThrow(() -> new ResourceNotFoundException("User", "UUID", uuid));
         UserDto responseDto = UserMapper.mapToDto(response);
         return responseDto;
     }
@@ -72,5 +76,18 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByUsername(username).orElse(new User());
         UserDto responseDto = UserMapper.mapToDto(user);
         return Optional.of(responseDto);
+    }
+
+    @Override
+    public User addPost(Post savedPost) {
+        User currentUser = getCurrentUser();
+        User user = currentUser.addPost(savedPost);
+        return userRepository.saveAndFlush(user);
+    }
+
+    public User getCurrentUser() {
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        Optional<UserDto> userDto = findByUsername(name);
+        return UserMapper.mapToModel(userDto.get());
     }
 }

@@ -2,10 +2,7 @@ package com.memeit.post;
 
 import com.memeit.comment.Comment;
 import com.memeit.user.User;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -33,6 +30,7 @@ public class Post {
 
     @ManyToOne
     @JoinColumn (name = "author_id")
+    @ToString.Exclude
     private User author;
 
     @Column(name = "TITLE", nullable = false)

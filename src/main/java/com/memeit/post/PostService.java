@@ -19,5 +19,4 @@ public interface PostService {
 
     Optional<PostDto> findByAuthor(User author);
 
-
 }

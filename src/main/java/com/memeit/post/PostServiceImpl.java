@@ -1,13 +1,15 @@
 package com.memeit.post;
 
-import com.memeit.exception.PostNotFoundException;
+import com.memeit.exception.ResourceNotFoundException;
 import com.memeit.user.User;
-import com.memeit.utils.SecurityContext;
+import com.memeit.user.UserDto;
+import com.memeit.user.UserMapper;
+import com.memeit.user.UserService;
 import com.memeit.utils.UuidGenerator;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,11 +17,11 @@ import java.util.Optional;
 public class PostServiceImpl implements PostService{
 
     private final PostRepository postRepository;
-    private final SecurityContext securityContext;
+    private final UserService userService;
 
-    public PostServiceImpl(PostRepository postRepository, SecurityContext securityContext) {
+    public PostServiceImpl(PostRepository postRepository, UserService userService) {
         this.postRepository = postRepository;
-        this.securityContext = securityContext;
+        this.userService = userService;
     }
 
 
@@ -32,7 +34,7 @@ public class PostServiceImpl implements PostService{
     @Override
     public PostDto findByUuid(String uuid) {
         Optional<Post> postOptional = postRepository.findByUuid(uuid);
-        Post response = postOptional.orElseThrow(() -> new PostNotFoundException("Post with provided Uuid {" + uuid + "} doesn't exist"));
+        Post response = postOptional.orElseThrow(() -> new ResourceNotFoundException("Post", "UUID", uuid));
         PostDto responseDto = PostMapper.mapToDto(response);
         return responseDto;
     }
@@ -41,12 +43,14 @@ public class PostServiceImpl implements PostService{
     public PostDto save(PostDto postDto) {
         postDto.setUuid(UuidGenerator.generateUuid());
         postDto.setUploadDate(LocalDate.now());
-        User currentLoggedInUser = securityContext.getCurrentLoggedInUser();
 
-        postDto.setAuthor(currentLoggedInUser);
-        Post savedPost = postRepository.save(PostMapper.mapToModel(postDto));
-        return PostMapper.mapToDto(savedPost);
-
+        User currentUser = userService.getCurrentUser();
+        postDto.setAuthor(currentUser);
+        Post post = PostMapper.mapToModel(postDto);
+        Post savedPost = postRepository.save(post);
+        userService.addPost(savedPost);
+        PostDto savedPostDto = PostMapper.mapToDto(savedPost);
+        return savedPostDto;
     }
 
     @Override

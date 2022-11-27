@@ -1,5 +1,6 @@
 package com.memeit.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.memeit.post.Post;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,6 +9,7 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -51,13 +53,26 @@ public class User {
     @Column(name = "ROLE")
     private Role role;
 
-//    @OneToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH},
-//    mappedBy = "author", fetch = FetchType.LAZY)
-//    private List<Post> post;
+    @OneToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE,
+            CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE},
+    mappedBy = "author", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<Post> posts;
 
     @Transient
     private String token;
 
     public User() {
+    }
+
+
+    User addPost(Post post) {
+
+        if(posts == null) {
+            posts = new ArrayList<>();
+        }
+        posts.add(post);
+        System.out.println("In user class"+ this);
+        return this;
     }
 }

@@ -1,5 +1,7 @@
 package com.memeit.user;
 
+import com.memeit.post.Post;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -17,4 +19,8 @@ public interface UserService {
     void deleteByUuid(String uuid);
 
     Optional<UserDto> findByUsername(String username);
+
+    User addPost(Post savedPost);
+
+    User getCurrentUser();
 }

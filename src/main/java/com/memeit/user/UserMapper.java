@@ -24,6 +24,7 @@ private ModelMapper mapper;
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .role(user.getRole())
+                .posts(user.getPosts())
                 .build();
     }
 
@@ -44,6 +45,7 @@ private ModelMapper mapper;
                 .firstName(userDto.getFirstName())
                 .lastName(userDto.getLastName())
                 .role(userDto.getRole())
+                .posts(userDto.getPosts())
                 .build();
     }
 
