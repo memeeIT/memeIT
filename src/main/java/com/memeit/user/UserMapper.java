@@ -1,12 +1,20 @@
 package com.memeit.user;
 
+import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
+@AllArgsConstructor
 public class UserMapper {
+
+private ModelMapper mapper;
 
 
     static UserDto mapToDto(User user) {
+//        return mapper.map(user, UserDto.class);
+
         return new UserDto().toBuilder()
                 .id(user.getId())
                 .uuid(user.getUuid())
@@ -16,6 +24,7 @@ public class UserMapper {
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .role(user.getRole())
+                .posts(user.getPosts())
                 .build();
     }
 
@@ -36,6 +45,7 @@ public class UserMapper {
                 .firstName(userDto.getFirstName())
                 .lastName(userDto.getLastName())
                 .role(userDto.getRole())
+                .posts(userDto.getPosts())
                 .build();
     }
 

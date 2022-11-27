@@ -1,8 +1,12 @@
 package com.memeit.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.memeit.post.Post;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -18,6 +22,8 @@ public class UserDto {
     private String firstName;
     private String lastName;
     private Role role;
+    @JsonIgnore
+    private List<Post> posts;
 
 
     public UserDto() {

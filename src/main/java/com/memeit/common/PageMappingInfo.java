@@ -13,4 +13,12 @@ public class PageMappingInfo {
     // authentication
     public static final String LOGIN_PAGE = "/login";
     public static final String REGISTER_PAGE = "/register";
+
+    // posts
+    public static final String POST_API_PATH = "/posts";
+
+    public static final String POST_UUID_PATH = PageMappingInfo.POST_API_PATH + PageMappingInfo.UUID_PATH;
+
+
+
 }
