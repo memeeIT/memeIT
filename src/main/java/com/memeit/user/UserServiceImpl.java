@@ -7,6 +7,7 @@ import com.memeit.utils.UuidGenerator;
 
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
@@ -52,7 +54,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto updateByUuid(String uuid, UserDto requestBody) {
         UserDto userDtoToUpdate = findByUuid(uuid);
-        userDtoToUpdate.setPassword(passwordEncoder.encode(requestBody.getPassword()));
+        if (requestBody.getPassword() != null) {
+            userDtoToUpdate.setPassword(passwordEncoder.encode(requestBody.getPassword()));
+        } else {
+            requestBody.setPassword(userDtoToUpdate.getPassword());
+        }
 
         if (requestBody.getFirstName() != null) userDtoToUpdate.setFirstName(requestBody.getFirstName());
         if (requestBody.getEmail() != null) userDtoToUpdate.setEmail(requestBody.getEmail());
@@ -61,6 +67,7 @@ public class UserServiceImpl implements UserService {
 
         User userUpdated = userRepository.saveAndFlush(UserMapper.mapToModel(userDtoToUpdate));
         UserDto responseBody = UserMapper.mapToDto(userUpdated);
+        log.info("" + responseBody);
         return responseBody;
     }
 
