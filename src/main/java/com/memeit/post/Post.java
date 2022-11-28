@@ -22,11 +22,8 @@ public class Post {
     @Column(name = "ID")
     private Long id;
 
-    @Column(name = "UUID")
-    private String uuid;
-
     @Column(name = "IMAGE", nullable = false)
-    private String image;
+    private String imageUrl;
 
     @ManyToOne
     @JoinColumn (name = "author_id")

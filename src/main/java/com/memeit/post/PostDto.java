@@ -17,9 +17,7 @@ public class PostDto {
 
     private Long id;
 
-    private String uuid;
-
-    private String image;
+    private String imageUrl;
 
     private User author;
 

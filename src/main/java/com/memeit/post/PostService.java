@@ -9,13 +9,13 @@ public interface PostService {
 
     List<PostDto> findAll();
 
-    PostDto findByUuid(String uuid);
+    PostDto findById(Long id);
 
     PostDto save(PostDto postDto);
 
-    PostDto updateByUuid(String uuid, PostDto requestBody);
+    PostDto updateById(Long id, PostDto requestBody);
 
-    void deleteByUuid(String uuid);
+    void deleteById(Long id);
 
     Optional<PostDto> findByAuthor(User author);
 
