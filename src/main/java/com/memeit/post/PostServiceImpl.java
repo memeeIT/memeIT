@@ -42,6 +42,7 @@ public class PostServiceImpl implements PostService{
     @Override
     public PostDto save(PostDto postDto) {
         postDto.setUploadDate(LocalDate.now());
+        postDto.setVotes(0);
 
         User currentUser = userService.getCurrentUser();
         postDto.setAuthor(currentUser);
