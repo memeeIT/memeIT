@@ -22,7 +22,7 @@ public class PostRestController {
         return postService.findAll();
     }
 
-    @GetMapping(PageMappingInfo.POST_UUID_PATH)
+    @GetMapping(PageMappingInfo.POST_ID_PATH)
     @ResponseStatus(HttpStatus.OK)
     public PostDto getPost(@PathVariable(name = "id") Long id) {
         return postService.findById(id);
@@ -35,14 +35,14 @@ public class PostRestController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PatchMapping(PageMappingInfo.POST_UUID_PATH)
+    @PatchMapping(PageMappingInfo.POST_ID_PATH)
     public PostDto updatePost(@PathVariable(name = "id") Long id,
                               @RequestBody PostDto requestBody) {
         return postService.updateById(id, requestBody);
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping(PageMappingInfo.POST_UUID_PATH)
+    @DeleteMapping(PageMappingInfo.POST_ID_PATH)
     public void deletePost(@PathVariable(name = "id") Long id) {
         postService.deleteById(id);
     }
