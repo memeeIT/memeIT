@@ -6,7 +6,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Set;
 
 @Data
@@ -22,11 +21,8 @@ public class Post {
     @Column(name = "ID")
     private Long id;
 
-    @Column(name = "UUID")
-    private String uuid;
-
     @Column(name = "IMAGE", nullable = false)
-    private String image;
+    private String imageUrl;
 
     @ManyToOne
     @JoinColumn (name = "author_id")
@@ -44,7 +40,5 @@ public class Post {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
     private Set<Comment> comments;
-
-
 
 }

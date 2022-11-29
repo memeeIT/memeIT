@@ -59,6 +59,7 @@ public class User {
     @JsonIgnore
     private List<Post> posts;
 
+
     @Transient
     private String token;
 
@@ -75,4 +76,6 @@ public class User {
         System.out.println("In user class"+ this);
         return this;
     }
+
+
 }

@@ -2,24 +2,23 @@ package com.memeit.comment;
 
 import com.memeit.post.Post;
 import com.memeit.user.User;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
+@Builder(toBuilder = true)
 @Table(name = "comments")
 public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    private Long id;
+    private Long commentId;
 
     @ManyToOne
     private User author;
@@ -29,9 +28,8 @@ public class Comment {
 
     @Column(length = 200)
     private String content;
-    private int votes;
 
-    private Date uploadDate;
+    private LocalDate uploadDate;
 
 
 

@@ -1,4 +1,4 @@
-package com.memeit.post;
+package com.memeit.comment;
 
 import com.memeit.user.User;
 import lombok.AllArgsConstructor;
@@ -12,21 +12,16 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
-public class PostDto {
+public class CommentDto {
 
-    private Long id;
-
-    private String imageUrl;
+    private Long commentId;
 
     private User author;
 
-    private String title;
+    private String content;
 
     private LocalDate uploadDate;
 
-    private int votes;
-
-//    private List<CommentDto> comments;
 
 
 }

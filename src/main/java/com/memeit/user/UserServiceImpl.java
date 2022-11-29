@@ -2,12 +2,9 @@ package com.memeit.user;
 
 import com.memeit.exception.ResourceNotFoundException;
 import com.memeit.post.Post;
-import com.memeit.post.PostDto;
 import com.memeit.utils.UuidGenerator;
-
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -91,6 +88,9 @@ public class UserServiceImpl implements UserService {
         User user = currentUser.addPost(savedPost);
         return userRepository.saveAndFlush(user);
     }
+
+
+
 
     public User getCurrentUser() {
         String name = SecurityContextHolder.getContext().getAuthentication().getName();

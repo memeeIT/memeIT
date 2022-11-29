@@ -16,8 +16,13 @@ public class PageMappingInfo {
 
     // posts
     public static final String POST_API_PATH = "/posts";
+    public static final String ID_PATH = "/{id}";
+    public static final String POST_ID_PATH = PageMappingInfo.POST_API_PATH + PageMappingInfo.ID_PATH;
 
-    public static final String POST_UUID_PATH = PageMappingInfo.POST_API_PATH + PageMappingInfo.UUID_PATH;
+    //comments
+    public static final String COMMENT_API_PATH = "/comments";
+
+    public static final String COMMENTS_PER_POST_API_PATH = PageMappingInfo.POST_API_PATH + PageMappingInfo.POST_ID_PATH + PageMappingInfo.COMMENT_API_PATH;
 
 
 

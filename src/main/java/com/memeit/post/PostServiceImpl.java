@@ -2,11 +2,7 @@ package com.memeit.post;
 
 import com.memeit.exception.ResourceNotFoundException;
 import com.memeit.user.User;
-import com.memeit.user.UserDto;
-import com.memeit.user.UserMapper;
 import com.memeit.user.UserService;
-import com.memeit.utils.UuidGenerator;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -32,16 +28,15 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public PostDto findByUuid(String uuid) {
-        Optional<Post> postOptional = postRepository.findByUuid(uuid);
-        Post response = postOptional.orElseThrow(() -> new ResourceNotFoundException("Post", "UUID", uuid));
+    public PostDto findById(Long id) {
+        Optional<Post> postOptional = postRepository.findById(id);
+        Post response = postOptional.orElseThrow(() -> new ResourceNotFoundException("Post", "ID", id));
         PostDto responseDto = PostMapper.mapToDto(response);
         return responseDto;
     }
 
     @Override
     public PostDto save(PostDto postDto) {
-        postDto.setUuid(UuidGenerator.generateUuid());
         postDto.setUploadDate(LocalDate.now());
         postDto.setVotes(0);
 
@@ -55,8 +50,8 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public PostDto updateByUuid(String uuid, PostDto requestBody) {
-        PostDto postDtoToUpdate = findByUuid(uuid);
+    public PostDto updateById(Long id, PostDto requestBody) {
+        PostDto postDtoToUpdate = findById(id);
         if (requestBody.getTitle() != null) postDtoToUpdate.setTitle(requestBody.getTitle());
         Post postUpdated = postRepository.saveAndFlush(PostMapper.mapToModel(postDtoToUpdate));
         PostDto responseBody = PostMapper.mapToDto(postUpdated);
@@ -64,8 +59,8 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public void deleteByUuid(String uuid) {
-        PostDto postToDelete = findByUuid(uuid);
+    public void deleteById(Long id) {
+        PostDto postToDelete = findById(id);
         Post post = PostMapper.mapToModel(postToDelete);
         postRepository.delete(post);
     }
@@ -76,4 +71,5 @@ public class PostServiceImpl implements PostService{
         PostDto responseDto = PostMapper.mapToDto(post);
         return Optional.of(responseDto);
     }
+
 }
