@@ -20,6 +20,7 @@ public class PageMappingInfo {
 
     public static final String POST_ID_PATH = PageMappingInfo.POST_API_PATH + PageMappingInfo.ID_PATH;
 
-
+ //image
+ public  static  final String GET_IMAGE_PATH = "/fileSystem/{fileName}";
 
 }
