@@ -8,6 +8,7 @@ public class PageMappingInfo {
     // users
     public static final String USER_API_PATH = "/users";
     public static final String UUID_PATH = "/{uuid}";
+    public static final String ID_PATH = "/{id}";
     public static final String USER_UUID_PATH = PageMappingInfo.USER_API_PATH + PageMappingInfo.UUID_PATH;
 
     // authentication
@@ -17,7 +18,7 @@ public class PageMappingInfo {
     // posts
     public static final String POST_API_PATH = "/posts";
 
-    public static final String POST_UUID_PATH = PageMappingInfo.POST_API_PATH + PageMappingInfo.UUID_PATH;
+    public static final String POST_ID_PATH = PageMappingInfo.POST_API_PATH + PageMappingInfo.ID_PATH;
 
 
 

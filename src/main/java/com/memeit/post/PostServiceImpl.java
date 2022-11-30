@@ -10,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,18 +33,17 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public PostDto findByUuid(String uuid) {
-        Optional<Post> postOptional = postRepository.findByUuid(uuid);
-        Post response = postOptional.orElseThrow(() -> new ResourceNotFoundException("Post", "UUID", uuid));
+    public PostDto findById(Long id) {
+        Optional<Post> postOptional = postRepository.findById(id);
+        Post response = postOptional.orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
         PostDto responseDto = PostMapper.mapToDto(response);
         return responseDto;
     }
 
     @Override
     public PostDto save(PostDto postDto) {
-        postDto.setUuid(UuidGenerator.generateUuid());
         postDto.setUploadDate(LocalDate.now());
-        postDto.setVotes(0);
+        postDto.setVotes(new HashSet<>());
 
         User currentUser = userService.getCurrentUser();
         postDto.setAuthor(currentUser);
@@ -55,8 +55,8 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public PostDto updateByUuid(String uuid, PostDto requestBody) {
-        PostDto postDtoToUpdate = findByUuid(uuid);
+    public PostDto updateById(Long id, PostDto requestBody) {
+        PostDto postDtoToUpdate = findById(id);
         if (requestBody.getTitle() != null) postDtoToUpdate.setTitle(requestBody.getTitle());
         Post postUpdated = postRepository.saveAndFlush(PostMapper.mapToModel(postDtoToUpdate));
         PostDto responseBody = PostMapper.mapToDto(postUpdated);
@@ -64,8 +64,8 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public void deleteByUuid(String uuid) {
-        PostDto postToDelete = findByUuid(uuid);
+    public void deleteById(Long id) {
+        PostDto postToDelete = findById(id);
         Post post = PostMapper.mapToModel(postToDelete);
         postRepository.delete(post);
     }
@@ -75,5 +75,21 @@ public class PostServiceImpl implements PostService{
         Post post = postRepository.findByAuthor(author).orElse(new Post());
         PostDto responseDto = PostMapper.mapToDto(post);
         return Optional.of(responseDto);
+    }
+
+    @Override
+    public void voteForMeme(Long postId) {
+        User currentUser = userService.getCurrentUser();
+        postRepository.findById(postId)
+                .map(post -> post.addUserVote(currentUser))
+                .ifPresent(postRepository::save);
+
+    }
+
+    @Override
+    public PostVoteCountDto getCurrentVoteCountForPost(Long id) {
+        PostDto postDto = findById(id);
+        Post post = PostMapper.mapToModel(postDto);
+        return PostMapper.mapToPostVoteDto(post);
     }
 }
