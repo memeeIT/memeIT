@@ -1,6 +1,7 @@
 package com.memeit.post;
 
 import com.memeit.common.PageMappingInfo;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,6 +46,20 @@ public class PostRestController {
     @DeleteMapping(PageMappingInfo.POST_ID_PATH)
     public void deletePost(@PathVariable(name = "id") Long id) {
         postService.deleteById(id);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PostMapping(PageMappingInfo.POST_API_PATH+"/vote"+PageMappingInfo.ID_PATH)
+    public void giveLike(@PathVariable(name = "id") Long id){
+        postService.voteForMeme(id);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(PageMappingInfo.POST_API_PATH+"/vote"+PageMappingInfo.ID_PATH)
+    public PostVoteCountDto getVoteCountForPost(@PathVariable(name = "id") Long id){
+
+        return postService.getCurrentVoteCountForPost(id);
+
     }
 
 }

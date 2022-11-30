@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -17,6 +19,7 @@ public class PostDto {
 
     private Long id;
 
+    private String image;
     private String imageUrl;
 
     private User author;
@@ -25,7 +28,7 @@ public class PostDto {
 
     private LocalDate uploadDate;
 
-    private int votes;
+    private Set<User> votes  = new HashSet<>();
 
 //    private List<CommentDto> comments;
 

@@ -7,6 +7,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -36,12 +37,20 @@ public class Post {
     @Column(name = "UPLOAD_DATE", nullable = false)
     private LocalDate uploadDate;
 
-    @Column(name = "VOTES")
-    private int votes;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "post_votes",
+    joinColumns = @JoinColumn(name= "postId"),
+    inverseJoinColumns = @JoinColumn(name = "userId"))
+    private Set<User> votes = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
     private Set<Comment> comments;
 
+
+    public Post addUserVote(User userVote) {
+        votes.add(userVote);
+        return this;
+    }
 
 
 }

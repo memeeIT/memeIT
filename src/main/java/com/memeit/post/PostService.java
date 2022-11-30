@@ -19,4 +19,7 @@ public interface PostService {
 
     Optional<PostDto> findByAuthor(User author);
 
+    void voteForMeme(Long postId);
+
+    PostVoteCountDto getCurrentVoteCountForPost(Long id);
 }
