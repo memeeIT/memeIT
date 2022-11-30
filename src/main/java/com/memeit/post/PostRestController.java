@@ -1,10 +1,13 @@
 package com.memeit.post;
 
 import com.memeit.common.PageMappingInfo;
+import com.memeit.image.FileImageServicesImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -12,9 +15,11 @@ import java.util.List;
 public class PostRestController {
 
     private final PostServiceImpl postService;
+    private FileImageServicesImpl fileImageServices;
 
-    public PostRestController(PostServiceImpl postService) {
+    public PostRestController(PostServiceImpl postService, FileImageServicesImpl fileImageServices) {
         this.postService = postService;
+        this.fileImageServices = fileImageServices;
     }
 
     @GetMapping(PageMappingInfo.POST_API_PATH)
@@ -29,9 +34,10 @@ public class PostRestController {
         return postService.findById(id);
     }
 
-    @PostMapping(PageMappingInfo.POST_API_PATH)
+    @PostMapping(PageMappingInfo.POST_API_PATH)//Method upload Image
     @ResponseStatus(HttpStatus.CREATED)
-    public PostDto savePost(@RequestBody PostDto postDto) {
+    public PostDto savePost(@RequestParam("image") MultipartFile file, @ModelAttribute PostDto postDto) throws IOException, IOException {
+        fileImageServices.uploadImageToFileSystem(file,postDto);
         return postService.save(postDto);
     }
 

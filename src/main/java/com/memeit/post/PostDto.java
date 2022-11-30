@@ -1,5 +1,6 @@
 package com.memeit.post;
 
+import com.memeit.image.FileImage;
 import com.memeit.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,7 +29,10 @@ public class PostDto {
 
     private LocalDate uploadDate;
 
-    private Set<User> votes  = new HashSet<>();
+    private FileImage fileImage; //Add File Image
+
+
+    private Set<User> votes = new HashSet<>();
 
 //    private List<CommentDto> comments;
 

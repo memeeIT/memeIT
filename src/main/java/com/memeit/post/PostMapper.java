@@ -13,6 +13,7 @@ public class PostMapper {
                 .title(post.getTitle())
                 .uploadDate(post.getUploadDate())
                 .votes(post.getVotes())
+                .fileImage(post.getFileImage()) // File image
                 .build();
     }
 
@@ -31,6 +32,7 @@ public class PostMapper {
                 .title(postDto.getTitle())
                 .uploadDate(postDto.getUploadDate())
                 .votes(postDto.getVotes())
+                .fileImage(postDto.getFileImage()) // File Image
                 .build();
     }
 
