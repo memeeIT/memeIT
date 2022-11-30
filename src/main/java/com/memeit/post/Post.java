@@ -24,7 +24,7 @@ public class Post {
     private Long id;
 
     @Column(name = "IMAGE", nullable = false)
-    private String image;
+    private String imageUrl;
 
     @ManyToOne
     @JoinColumn (name = "author_id")

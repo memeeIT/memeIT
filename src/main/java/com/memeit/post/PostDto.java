@@ -20,6 +20,7 @@ public class PostDto {
     private Long id;
 
     private String image;
+    private String imageUrl;
 
     private User author;
 

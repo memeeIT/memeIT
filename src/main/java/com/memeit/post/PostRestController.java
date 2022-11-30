@@ -59,6 +59,7 @@ public class PostRestController {
     public PostVoteCountDto getVoteCountForPost(@PathVariable(name = "id") Long id){
 
         return postService.getCurrentVoteCountForPost(id);
+
     }
 
 }
