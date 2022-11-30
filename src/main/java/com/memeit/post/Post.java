@@ -1,6 +1,7 @@
 package com.memeit.post;
 
 import com.memeit.comment.Comment;
+import com.memeit.image.FileImage;
 import com.memeit.user.User;
 import lombok.*;
 
@@ -25,6 +26,11 @@ public class Post {
 
     @Column(name = "IMAGE", nullable = false)
     private String imageUrl;
+
+    @OneToOne
+    @JoinColumn(name = "file_image_id")
+    private FileImage fileImage;
+
 
     @ManyToOne
     @JoinColumn (name = "author_id")
