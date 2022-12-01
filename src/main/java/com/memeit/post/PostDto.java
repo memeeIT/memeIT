@@ -1,5 +1,6 @@
 package com.memeit.post;
 
+import com.memeit.image.FileImage;
 import com.memeit.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,12 +20,11 @@ public class PostDto {
 
     private Long id;
 
-    private String image;
-    private String imageUrl;
-
     private User author;
 
     private String title;
+
+    private FileImage fileImage;
 
     private LocalDate uploadDate;
 

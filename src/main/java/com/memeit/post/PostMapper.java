@@ -8,8 +8,7 @@ public class PostMapper {
     static PostDto mapToDto(Post post) {
         return new PostDto().toBuilder()
                 .id(post.getId())
-                .image(post.getImage())
-                .imageUrl(post.getImageUrl())
+                .fileImage(post.getFileImage())
                 .author(post.getAuthor())
                 .title(post.getTitle())
                 .uploadDate(post.getUploadDate())
@@ -27,8 +26,7 @@ public class PostMapper {
     public static Post mapToModel(PostDto postDto) {
         return new Post().toBuilder()
                 .id(postDto.getId())
-                .image(postDto.getImage())
-                .imageUrl(postDto.getImageUrl())
+                .fileImage(postDto.getFileImage())
                 .author(postDto.getAuthor())
                 .title(postDto.getTitle())
                 .uploadDate(postDto.getUploadDate())
