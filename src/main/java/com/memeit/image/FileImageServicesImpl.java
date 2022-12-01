@@ -49,5 +49,11 @@ public class FileImageServicesImpl {
         byte[] images = Files.readAllBytes(new File(filePath).toPath());
         return images;
     }
+    public byte[] downloadImageFromId(Long id) throws IOException {
+        Optional<FileImage> fileData = fileDataRepository.findById(id);
+        String filePath = fileData.get().getFilePath();
+        byte[] images = Files.readAllBytes(new File(filePath).toPath());
+        return images;
+    }
 
 }

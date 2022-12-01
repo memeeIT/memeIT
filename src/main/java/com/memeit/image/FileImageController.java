@@ -20,9 +20,9 @@ import static com.memeit.common.PageMappingInfo.*;
 public class FileImageController {
     private final FileImageServicesImpl service;
 
-    @GetMapping(GET_IMAGE_PATH)
-    public ResponseEntity<?> downloadImageFromFileSystem(@PathVariable String name) throws IOException {
-        byte[] bytes = service.downloadImageFromFileSystem(name);
+    @GetMapping(GET_IMAGE_ID)
+    public ResponseEntity<?> downloadImageFromFileSystem(@PathVariable(name = "id") Long id) throws IOException {
+        byte[] bytes = service.downloadImageFromId(id);
         return ResponseEntity.status(HttpStatus.OK)
                 .contentType(MediaType.valueOf("image/png"))
                 .body(bytes);

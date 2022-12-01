@@ -22,5 +22,6 @@ public class PageMappingInfo {
 
  //image
  public  static  final String GET_IMAGE_PATH = "/fileSystem/{fileName}";
+ public  static  final String GET_IMAGE_ID = "/fileSystem/{id}";
 
 }

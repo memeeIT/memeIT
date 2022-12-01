@@ -24,8 +24,8 @@ public class Post {
     @Column(name = "ID")
     private Long id;
 
-    @Column(name = "IMAGE", nullable = false)
-    private String imageUrl;
+//    @Column(name = "IMAGE", nullable = false)
+//    private String imageUrl;
 
     @OneToOne
     @JoinColumn(name = "file_image_id")
